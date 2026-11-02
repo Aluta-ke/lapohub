@@ -334,6 +334,19 @@
     }
   }
 
+  function initSpinCards() {
+    var photos = document.querySelectorAll(".card-photo-spin");
+    if (!photos.length) return;
+    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduce || !("IntersectionObserver" in window)) return;
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        entry.target.classList.toggle("is-turning", entry.isIntersecting);
+      });
+    }, { threshold: 0.6 });
+    Array.prototype.forEach.call(photos, function (photo) { observer.observe(photo); });
+  }
+
   var tracks = [
     { title: "Paper Lantern", category: "Calm", bpm: 70, notes: [69, 72, 76, 79, 76, 72, 67, 64] },
     { title: "Study Window", category: "Focus", bpm: 84, notes: [60, 67, 72, 67, 64, 67, 72, 76] },
@@ -532,6 +545,7 @@
   initCourses();
   initQuiz();
   initSpin();
+  initSpinCards();
   initMusic();
   initCatalog();
   initAge();
