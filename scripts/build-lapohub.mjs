@@ -105,7 +105,7 @@ function shell({ title, description, pathname, body, noindex = false }) {
   <a href="/"${current(pathname, "/")}>Home</a>
   <a href="/chat/"${current(pathname, "/chat/")}>Chat</a>
   <a href="/activities/"${current(pathname, "/activities/")}>Activities</a>
-  <a href="/courses/"${current(pathname, "/courses/")}>Learn</a>
+  <a href="/ai-lessons/"${current(pathname, "/ai-lessons/")}>Learn</a>
   <a href="/dashboard/"${current(pathname, "/dashboard/")}>Account</a>
 </nav>
 <script src="/assets/lapo.js" defer></script>
@@ -121,12 +121,8 @@ const activities = [
   ["Teach local languages", "Swahili, Luganda, and other African languages.", "/languages/", "activity-languages.jpg", "Active"],
   ["TikTok activities", "Short creative tasks with clear instructions.", "/tiktok/", "activity-video.jpg", "Active"],
   ["Practice trivia", "Answer questions and keep your score.", "/trivia/", "activity-trivia.jpg", "Active"],
-  ["Article reading", "Read short guides with a progress bar.", "/articles/", "activity-articles.jpg", "Active"],
   ["Music listening", "Play original pieces in the listening room.", "/music/", "activity-music.jpg", "Active"],
-  ["AI video tasks", "Plan a short learning video and save your brief.", "/ai-videos/", "activity-aivideo.jpg", "Active"],
   ["AI-powered lessons", "Beginner lessons on tools, prompts, and productivity.", "/ai-lessons/", "activity-ailessons.jpg", "Active"],
-  ["Online courses", "Work through lessons and track what you finish.", "/courses/", "activity-courses.jpg", "Active"],
-  ["Investment learning", "Financial literacy with clear risk notes.", "/investment/", "activity-invest.jpg", "Active"],
   ["Sports tips", "Adult sports notes. No betting on this site.", "/tips/", "activity-sports.jpg", "Active"]
 ];
 
@@ -308,8 +304,8 @@ pages.push({
   <section class="wrap section grid-2">
     <article class="panel">
       <h2>Keep learning</h2>
-      <p class="muted">Articles, AI lessons, and courses work in the browser. Progress stays on your device.</p>
-      <p style="margin-top:12px"><a class="btn" href="/courses/">Browse courses</a></p>
+      <p class="muted">AI lessons work in the browser. Progress stays on your device.</p>
+      <p style="margin-top:12px"><a class="btn" href="/ai-lessons/">Browse lessons</a></p>
     </article>
     <article class="panel">
       <h2>Community</h2>
@@ -375,9 +371,9 @@ function wheelMarkup() {
     ["Conversation", "#1c2433", "#f7f1e6"],
     ["Languages", "#b7791f", "#1c2433"],
     ["Practice quiz", "#246247", "#f7f1e6"],
-    ["Reading", "#62456f", "#f7f1e6"],
+    ["Trivia", "#62456f", "#f7f1e6"],
     ["Music", "#b5523a", "#fffaf4"],
-    ["Courses", "#2a3548", "#f7f1e6"]
+    ["Lessons", "#2a3548", "#f7f1e6"]
   ];
   const cx = 160;
   const cy = 160;
@@ -439,9 +435,9 @@ pages.push({
         <li><i class="swatch" style="background:#1c2433"></i> Conversation</li>
         <li><i class="swatch" style="background:#b7791f"></i> Languages</li>
         <li><i class="swatch" style="background:#246247"></i> Practice quiz</li>
-        <li><i class="swatch" style="background:#62456f"></i> Reading</li>
+        <li><i class="swatch" style="background:#62456f"></i> Trivia</li>
         <li><i class="swatch" style="background:#b5523a"></i> Music</li>
-        <li><i class="swatch" style="background:#2a3548"></i> Courses</li>
+        <li><i class="swatch" style="background:#2a3548"></i> Lessons</li>
       </ul>
       <h2 style="margin-top:18px">Rules</h2>
       <div class="notice">One spin at a time. The reward is an activity result, saved on this device and shown in your dashboard.</div>
@@ -634,44 +630,6 @@ pages.push({
 });
 
 pages.push({
-  pathname: "/articles/",
-  title: "Articles — LapoHub",
-  description: "Read LapoHub articles on communication, language exchange, and digital learning.",
-  body: `${pageHero("Reading", "Articles", "Original notes on conversation, language practice, and focused study.")}
-  <section class="wrap">
-    <div class="filters"><label>Search<input type="search" data-filter-search placeholder="Search titles"></label>
-      <label>Category<select data-filter-category><option value="all">All</option><option>Communication</option><option>Language exchange</option><option>Digital learning</option><option>Online education</option></select></label>
-    </div>
-    <div class="card-grid">
-      ${articles.map((article) => `<article class="card" data-filter-item data-name="${esc(article.title)}" data-category="${esc(article.category)}"><a class="card-link" href="/articles/${article.slug}/"><img class="thumb" alt="" src="/assets/articles/${article.slug}.png"><span class="pill pill-live">${esc(article.category)}</span><h3>${esc(article.title)}</h3><p class="muted">${esc(article.description)}</p></a>${startLink()}</article>`).join("")}
-    </div>
-  </section>`
-});
-
-for (const article of articles) {
-  pages.push({
-    pathname: `/articles/${article.slug}/`,
-    title: `${article.title} — LapoHub`,
-    description: article.description,
-    body: `<div class="article-top" aria-hidden="true"><span data-read-bar></span></div>
-    <article class="wrap section reading" data-article="${article.slug}">
-      <div class="prose">
-        <p class="crumbs"><a href="/articles/">Articles</a> / ${esc(article.category)}</p>
-        <h1>${esc(article.title)}</h1>
-        <p>${startLink()}</p>
-        <img class="thumb" src="/assets/articles/${article.slug}.png" alt="">
-        ${article.paragraphs.map((p) => `<p>${esc(p)}</p>`).join("")}
-      </div>
-      <aside class="panel">
-        <h2>Reading</h2>
-        <p data-read-label class="muted">Progress starts as you read.</p>
-        <p class="fine">Saved in this browser. It is not a certificate and it is not paid.</p>
-      </aside>
-    </article>`
-  });
-}
-
-pages.push({
   pathname: "/music/",
   title: "Music listening — LapoHub",
   description: "Listen to original LapoHub demo pieces in a simple browser player. A commercial music catalog is not connected.",
@@ -682,27 +640,6 @@ pages.push({
     <div class="progress" aria-hidden="true"><span data-player-bar></span></div>
     <div data-track-list></div>
     <p class="fine">Categories in this demo set: Calm, Focus, and Bright. Thumbnails are original color art.</p>
-  </section>`
-});
-
-pages.push({
-  pathname: "/ai-videos/",
-  title: "AI video activities — LapoHub",
-  description: "Plan a short learning video on LapoHub and save the brief with your activities.",
-  body: `${pageHero("Active", "AI video tasks", "Choose a brief, plan the clip, and save your notes with your other activities.")}
-  <section class="wrap section grid-3">
-    <article class="panel"><img class="thumb" src="/assets/ai/storyboard.png" alt="Illustration of a three-frame storyboard"><h3>Three-frame storyboard</h3><p class="muted">Frame one states the greeting. Frame two shows the meaning. Frame three uses it in a sentence.</p><p style="margin-top:12px">${startLink()}</p></article>
-    <article class="panel"><img class="thumb" src="/assets/ai/prompt.png" alt="Illustration of a prompt card"><h3>Prompt card</h3><p class="muted">Write the audience, the language, and a 30-second limit. Check every translation before you record.</p><p style="margin-top:12px">${startLink()}</p></article>
-    <article class="panel"><img class="thumb" src="/assets/ai/edit.png" alt="Illustration of an edit timeline"><h3>Simple edit</h3><p class="muted">Cut anything you cannot explain. Do not add music you do not have rights to use.</p><p style="margin-top:12px">${startLink()}</p></article>
-  </section>
-  <section class="wrap section panel">
-    <h2>Submission</h2>
-    <form class="form-grid" data-preview-form>
-      <label>Task<select name="activity"><option>Three-frame storyboard</option><option>Prompt card</option><option>Simple edit</option></select></label>
-      <label>What you planned<textarea name="notes" maxlength="500"></textarea></label>
-      <button class="btn" type="submit">Save activity</button>
-      <p data-form-result class="muted" role="status"></p>
-    </form>
   </section>`
 });
 
@@ -725,52 +662,11 @@ for (const [slug, title, category, text] of aiLessons) {
     <section class="wrap section prose">
       <p>Start with a task you already understand, such as rewriting a greeting or sorting a study list. Compare the result with what you know. If a translation, name, or number looks unfamiliar, check it with a reliable source or a person who speaks the language.</p>
       <p>Keep private material out of the tool. That includes chat logs, identification numbers, and anything from your registered account. A useful result is one you can explain in your own words.</p>
-      <p>This lesson does not unlock a paid video job. When you want to plan a clip, use the AI video page and read the coming-soon notice before you expect a review.</p>
+      <p>This lesson does not unlock a paid video job.</p>
       <p><a href="/ai-lessons/">All AI lessons</a></p>
     </section>`
   });
 }
-
-pages.push({
-  pathname: "/courses/",
-  title: "Online courses — LapoHub",
-  description: "LapoHub courses with lessons, descriptions, and completion tracking stored in your browser.",
-  body: `${pageHero("Courses", "Online courses", "Short courses you can finish on this website. Progress is saved in this browser and is not a certificate.")}
-  <section class="wrap section card-grid">
-    ${courses.map((course) => `<article class="card"><a class="card-link" href="/courses/${course.slug}/"><img class="thumb" alt="" src="/assets/courses/${course.slug}.png"><span class="pill pill-live">${course.category}</span><h3>${course.title}</h3><p class="muted">${course.description}</p><p class="meta">${course.lessons.length} lessons</p></a>${startLink()}</article>`).join("")}
-  </section>`
-});
-
-for (const course of courses) {
-  pages.push({
-    pathname: `/courses/${course.slug}/`,
-    title: `${course.title} — LapoHub`,
-    description: course.description,
-    body: `<div class="wrap page-hero"><p class="crumbs"><a href="/courses/">Courses</a> / ${esc(course.category)}</p><h1>${esc(course.title)}</h1><p class="lede">${esc(course.description)}</p><div class="hero-actions">${startLink()}</div></div>
-    <section class="wrap section" data-course="${course.slug}">
-      <img class="thumb" src="/assets/courses/${course.slug}.png" alt="">
-      <div class="progress" style="margin:12px 0"><span data-course-bar></span></div>
-      <p data-course-label class="muted">0 of ${course.lessons.length} lessons marked complete on this device</p>
-      ${course.lessons.map(([title, text], index) => `<div class="lesson"><label><input type="checkbox" data-lesson="${index + 1}"> <span><strong>${esc(title)}</strong><br><span class="muted">${esc(text)}</span></span></label>${startLink()}</div>`).join("")}
-    </section>`
-  });
-}
-
-pages.push({
-  pathname: "/investment/",
-  title: "Investment learning — LapoHub",
-  description: "Financial literacy notes on LapoHub. Investing can lose money. This is not an investment service.",
-  body: `${pageHero("Education", "Investment learning", "These notes explain ideas used in financial literacy. LapoHub does not take investments, hold customer funds, or promise returns.")}
-  <section class="wrap section">
-    <div class="notice warn"><strong>Risk.</strong> You can lose some or all of the money you invest. Past examples are not future results. Nothing on this page is a recommendation to buy, sell, or hold any asset.</div>
-    <div class="grid-2" style="margin-top:14px">
-      <article class="panel"><h3>What investing means</h3><p class="muted">Investing is putting money into something that can rise or fall in value. It is different from a fee you pay for a lesson, and it is different from cash you need for rent or food.</p></article>
-      <article class="panel"><h3>Time and fees</h3><p class="muted">Costs, taxes, and the length of time you can leave money untouched all change the result. A short lesson cannot calculate that for you.</p></article>
-      <article class="panel"><h3>Licensed advice</h3><p class="muted">Personal advice belongs with a person or firm allowed to give it where you live. LapoHub is not that firm and does not open investment accounts.</p></article>
-      <article class="panel"><h3>Learning first</h3><p class="muted">Before considering any product, write down the amount you can afford to lose and the questions you still cannot answer. If the list is long, keep studying.</p></article>
-    </div>
-  </section>`
-});
 
 pages.push({
   pathname: "/tips/",
@@ -903,7 +799,7 @@ pages.push({
   description: "LapoHub is a digital platform for international communication, language exchange, digital learning, and interactive activities.",
   body: `${pageHero("About", "About LapoHub", "LapoHub brings conversation, language exchange, and online education into one place, with a design and structure of its own.")}
   <section class="wrap section prose">
-    <p>The most visible activity is chat with people in other countries. That chat remains on the registered account system. Lessons, articles, and practice tools that do not need a payment ledger live on this website.</p>
+    <p>The most visible activity is chat with people in other countries. That chat remains on the registered account system. Lessons and practice tools that do not need a payment ledger live on this website.</p>
     <p>Every activity on the homepage is open. Chat still opens through your registered account. Learning progress, spins, and saved items stay with this browser.</p>
     <p>Support is available through the WhatsApp Channel and by email at ${EMAIL}.</p>
   </section>`
@@ -930,7 +826,7 @@ pages.push({
     <p>LapoHub provides a website for international communication, language exchange, digital learning, and interactive activities. Chat accounts are created at the official registration URL. This website is not a second chat server.</p>
     <p>You agree not to misuse the site or attempt to break into it. Activity rewards, saved items, and lesson progress on this website stay in your browser. They are not cash withdrawals.</p>
     <p>The welcome bonus is a promotion of UGX 10,000 for Uganda and USD 2 for other regions. It is added to your active account wallet and credited for active users immediately after activation.</p>
-    <p>Investment pages are educational. They are not an offer to invest. Sports notes are optional, limited to adults, and are not a betting service. TikTok-style tasks are not an official TikTok program and do not promise earnings.</p>
+    <p>Sports notes are optional, limited to adults, and are not a betting service. TikTok-style tasks are not an official TikTok program and do not promise earnings.</p>
     <p>Learning progress stored in your browser can be cleared by you or by the browser. It is not a credential.</p>
     <p>Questions: <a href="mailto:${EMAIL}">${EMAIL}</a> or the <a href="${WA}">WhatsApp Channel</a>.</p>
   </section>`
@@ -942,7 +838,7 @@ pages.push({
   description: "How the LapoHub website handles information stored in your browser and links to registration and support.",
   body: `${pageHero("Privacy", "Privacy policy", "Last updated 2 November 2026.")}
   <section class="wrap section prose">
-    <p>This website can store a display name, a region choice for bonus display, article progress, course checkboxes, and practice quiz scores in your browser. That information stays on your device. LapoHub does not operate a member database from these pages.</p>
+    <p>This website can store a display name, a region choice for bonus display, and practice quiz scores in your browser. That information stays on your device. LapoHub does not operate a member database from these pages.</p>
     <p>Registration happens on a separate site. Their handling of your account is covered by that site after you leave LapoHub. The WhatsApp Channel is operated on WhatsApp’s platform.</p>
     <p>Email you send to ${EMAIL} is used to reply to your support request. Do not include passwords or payment card numbers.</p>
     <p>The sports section remembers a self-declared age confirmation for the current browser session. It is not an identity check.</p>
@@ -961,12 +857,12 @@ pages.push({
       <thead><tr><th>Area</th><th>Status</th><th>Notes</th></tr></thead>
       <tbody>
         <tr><td>Chat handoff</td><td>Partial</td><td>Registration link is live. Messages stay on the account platform.</td></tr>
-        <tr><td>Articles, AI lessons, courses</td><td>Available</td><td>Content and on-device progress.</td></tr>
+        <tr><td>AI lessons</td><td>Available</td><td>Content and on-device progress.</td></tr>
         <tr><td>Trivia and music demos</td><td>Partial</td><td>Practice tools work. Rewards and a commercial catalog do not.</td></tr>
         <tr><td>Languages</td><td>Partial</td><td>Lesson notes exist. Teacher booking does not.</td></tr>
-        <tr><td>Spin, marketplace, AI video tasks, TikTok activities</td><td>Active</td><td>Open on this website. Results are saved in the browser.</td></tr>
+        <tr><td>Spin, marketplace, TikTok activities</td><td>Active</td><td>Open on this website. Results are saved in the browser.</td></tr>
         <tr><td>Welcome bonus</td><td>Promotion</td><td>Added to the active account wallet and credited for active users immediately after activation.</td></tr>
-        <tr><td>Investment and sports</td><td>Education only</td><td>No transactions.</td></tr>
+        <tr><td>Sports</td><td>Education only</td><td>No transactions.</td></tr>
       </tbody>
     </table>
   </section>`
@@ -1123,12 +1019,6 @@ async function buildImages() {
   };
   for (const [name, draw] of Object.entries(productArt)) {
     await writePng(`assets/products/${name}`, canvasOf(640, 480, draw));
-  }
-  for (const article of articles) {
-    await writePng(`assets/articles/${article.slug}.png`, canvasOf(800, 480, (ctx, w, h) => scene(ctx, w, h, "#1c2433", "#b5523a")));
-  }
-  for (const course of courses) {
-    await writePng(`assets/courses/${course.slug}.png`, canvasOf(800, 480, (ctx, w, h) => scene(ctx, w, h, "#246247", "#e3b15a")));
   }
   await writePng("assets/ai/storyboard.png", canvasOf(800, 480, (ctx, w, h) => scene(ctx, w, h, "#1c2433", "#e3b15a")));
   await writePng("assets/ai/prompt.png", canvasOf(800, 480, (ctx, w, h) => scene(ctx, w, h, "#62456f", "#f4efe6")));

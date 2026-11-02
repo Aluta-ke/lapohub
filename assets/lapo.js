@@ -260,7 +260,7 @@
     if (!wheel || !button) return;
     var busy = false;
     var motion = 0;
-    var segments = ["Conversation", "Languages", "Practice quiz", "Reading", "Music", "Courses"];
+    var segments = ["Conversation", "Languages", "Practice quiz", "Trivia", "Music", "Lessons"];
     var reduceQuery = window.matchMedia ? window.matchMedia("(prefers-reduced-motion: reduce)") : null;
     if (!reduceQuery || !reduceQuery.matches) wheel.classList.add("is-idling");
 
@@ -515,7 +515,7 @@
       var articleBits = Object.keys(articles).map(function (key) { return key + " " + articles[key] + "%"; });
       var courseBits = Object.keys(courses).map(function (key) { return key + " (" + courses[key].length + " lessons checked)"; });
       var parts = articleBits.concat(courseBits);
-      learn.textContent = parts.length ? parts.join(" · ") : "No lesson or article progress is stored in this browser yet.";
+      learn.textContent = parts.length ? parts.join(" · ") : "No saved progress is stored in this browser yet.";
     }
     var notes = document.querySelector("[data-notifications]");
     if (notes) {
