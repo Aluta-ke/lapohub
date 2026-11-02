@@ -76,6 +76,7 @@ function shell({ title, description, pathname, body, noindex = false }) {
       <strong>LapoHub</strong>
       <p class="fine">International communication, language exchange, digital learning, and interactive activities.</p>
       <p class="fine">The welcome bonus is a promotion. It is added to your active account wallet and credited for active users immediately after activation.</p>
+      <p class="fine">Prize-wheel photograph by Kari, <a href="https://commons.wikimedia.org/wiki/File:Wheel_of_Fortune_Cyclone_Arcade_Game.jpg">CC BY 2.0</a>.</p>
     </div>
     <div>
       <strong>Explore</strong>
@@ -136,7 +137,8 @@ function startLink() {
 function activityCards(featured) {
   return activities.map(([title, text, href, image, label], index) => {
     const cls = index === 0 && featured ? "card feature-card" : "card";
-    return `<article class="${cls}"><a class="card-link" href="${href}"><img class="card-photo" src="/assets/activities/${image}" alt=""><div class="icon-row"><span class="pill pill-live">Active</span></div><h3>${title}</h3><p class="muted">${text}</p><p class="meta" style="margin-top:auto">${label}</p></a>${startLink()}</article>`;
+    const frame = image === "activity-spin.jpg" ? " card-photo-spin" : image === "activity-sports.jpg" ? " card-photo-sport" : "";
+    return `<article class="${cls}"><a class="card-link" href="${href}"><img class="card-photo${frame}" src="/assets/activities/${image}" alt=""><div class="icon-row"><span class="pill pill-live">Active</span></div><h3>${title}</h3><p class="muted">${text}</p><p class="meta" style="margin-top:auto">${label}</p></a>${startLink()}</article>`;
   }).join("");
 }
 
@@ -366,6 +368,58 @@ pages.push({
   <section class="wrap section"><div class="card-grid">${activityCards(false)}</div></section>`
 });
 
+function wheelMarkup() {
+  const segments = [
+    ["Conversation", "#1c2433", "#f7f1e6"],
+    ["Languages", "#b7791f", "#1c2433"],
+    ["Practice quiz", "#246247", "#f7f1e6"],
+    ["Reading", "#62456f", "#f7f1e6"],
+    ["Music", "#b5523a", "#fffaf4"],
+    ["Courses", "#2a3548", "#f7f1e6"]
+  ];
+  const cx = 160;
+  const cy = 160;
+  const radius = 150;
+  const polar = (deg, dist) => {
+    const rad = (deg * Math.PI) / 180;
+    return [cx + dist * Math.sin(rad), cy - dist * Math.cos(rad)];
+  };
+  const wedges = segments.map((seg, index) => {
+    const start = index * 60;
+    const end = start + 60;
+    const mid = start + 30;
+    const [x0, y0] = polar(start, radius);
+    const [x1, y1] = polar(end, radius);
+    const [tx, ty] = polar(mid, 78);
+    const [px, py] = polar(start, 138);
+    const words = seg[0].split(" ");
+    const label = words.length === 1
+      ? esc(seg[0])
+      : `<tspan x="${tx.toFixed(2)}" dy="-0.45em">${esc(words[0])}</tspan><tspan x="${tx.toFixed(2)}" dy="1.15em">${esc(words.slice(1).join(" "))}</tspan>`;
+    return `<path d="M${cx} ${cy} L${x0.toFixed(2)} ${y0.toFixed(2)} A${radius} ${radius} 0 0 1 ${x1.toFixed(2)} ${y1.toFixed(2)} Z" fill="${seg[1]}"/>
+      <line x1="${cx}" y1="${cy}" x2="${x0.toFixed(2)}" y2="${y0.toFixed(2)}" stroke="#f6e7c1" stroke-width="2"/>
+      <circle cx="${px.toFixed(2)}" cy="${py.toFixed(2)}" r="5" fill="#f8edd2" stroke="#8a5a12" stroke-width="1.2"/>
+      <text x="${tx.toFixed(2)}" y="${ty.toFixed(2)}" fill="${seg[2]}" font-size="13" font-weight="650" text-anchor="middle" dominant-baseline="middle" transform="rotate(${mid} ${tx.toFixed(2)} ${ty.toFixed(2)})">${label}</text>`;
+  }).join("");
+  const bulbs = Array.from({ length: 18 }, (_, index) => {
+    const angle = (index / 18) * Math.PI * 2 - Math.PI / 2;
+    const x = 50 + 46.4 * Math.cos(angle);
+    const y = 50 + 46.4 * Math.sin(angle);
+    return `<i style="left:${x.toFixed(2)}%;top:${y.toFixed(2)}%"></i>`;
+  }).join("");
+  return `<div class="wheel-stage">
+      <div class="wheel-rim">
+        <div class="wheel-lights" aria-hidden="true">${bulbs}</div>
+        <div class="wheel-rotor" data-wheel>
+          <svg viewBox="0 0 320 320" aria-hidden="true">${wedges}</svg>
+        </div>
+        <div class="wheel-shine" aria-hidden="true"></div>
+        <div class="wheel-hub" aria-hidden="true"></div>
+        <div class="wheel-pointer" aria-hidden="true"></div>
+      </div>
+    </div>`;
+}
+
 pages.push({
   pathname: "/spin/",
   title: "Spin and win — LapoHub",
@@ -373,10 +427,7 @@ pages.push({
   body: `${pageHero("Active", "Spin and win", "Give the wheel a spin. Your result is saved with your other activity rewards on this device.")}
   <section class="wrap section wheel-layout">
     <div>
-      <div class="wheel-stage">
-        <div class="pointer" aria-hidden="true"></div>
-        <div class="wheel" data-wheel aria-hidden="true"></div>
-      </div>
+      ${wheelMarkup()}
       <p style="text-align:center;margin-top:12px"><button class="btn btn-gold" type="button" data-spin>Spin</button></p>
       <p class="muted" style="text-align:center" data-spin-result>No spin yet.</p>
     </div>

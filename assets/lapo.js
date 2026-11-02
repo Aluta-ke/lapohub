@@ -243,14 +243,26 @@
     });
   }
 
+  function wheelAngle(el) {
+    var transform = window.getComputedStyle(el).transform;
+    if (!transform || transform === "none") return 0;
+    var values = transform.match(/-?\d+\.?\d*(?:e-?\d+)?/gi);
+    if (!values || values.length < 4) return 0;
+    var angle = Math.atan2(parseFloat(values[1]), parseFloat(values[0])) * (180 / Math.PI);
+    return angle < 0 ? angle + 360 : angle;
+  }
+
   function initSpin() {
     var wheel = document.querySelector("[data-wheel]");
+    var stage = document.querySelector(".wheel-stage");
     var button = document.querySelector("[data-spin]");
     var result = document.querySelector("[data-spin-result]");
     if (!wheel || !button) return;
-    var rotation = 0;
     var busy = false;
+    var motion = 0;
     var segments = ["Conversation", "Languages", "Practice quiz", "Reading", "Music", "Courses"];
+    var reduceQuery = window.matchMedia ? window.matchMedia("(prefers-reduced-motion: reduce)") : null;
+    if (!reduceQuery || !reduceQuery.matches) wheel.classList.add("is-idling");
     button.addEventListener("click", function () {
       if (busy) return;
       var today = new Date().toISOString().slice(0, 10);
@@ -261,19 +273,41 @@
         return;
       }
       busy = true;
-      var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      rotation += reduce ? 60 : 1440 + Math.floor(Math.random() * 360);
-      wheel.style.transform = "rotate(" + rotation + "deg)";
+      var ticket = ++motion;
+      var reduce = reduceQuery && reduceQuery.matches;
+      var start = wheelAngle(wheel);
+      var rotation = start + (reduce ? 60 : 1800 + Math.floor(Math.random() * 360));
+      wheel.classList.remove("is-idling");
+      wheel.style.transition = "none";
+      wheel.style.transform = "rotate(" + start + "deg)";
+      if (stage) stage.classList.add("is-spinning");
+      window.requestAnimationFrame(function () {
+        window.requestAnimationFrame(function () {
+          wheel.style.transition = "";
+          wheel.style.transform = "rotate(" + rotation + "deg)";
+        });
+      });
       if (result) result.textContent = "Spinning…";
       window.setTimeout(function () {
         busy = false;
-        var index = Math.floor((((360 - (rotation % 360)) % 360) / 60)) % segments.length;
+        var landed = ((rotation % 360) + 360) % 360;
+        var index = Math.floor((((360 - landed) % 360) / 60)) % segments.length;
         var reward = segments[index];
         spins.count += 1;
         write("lapohub.spins", spins);
         addEntry("Spin reward: " + reward);
         if (result) result.textContent = "You landed on " + reward + ". It is saved in your dashboard. " + spins.count + " of 5 spins used today.";
-      }, reduce ? 250 : 4500);
+        if (stage) stage.classList.remove("is-spinning");
+        if (!reduce) {
+          window.setTimeout(function () {
+            if (ticket !== motion) return;
+            wheel.style.transition = "none";
+            wheel.style.setProperty("--wheel-base", landed + "deg");
+            wheel.classList.add("is-idling");
+            wheel.style.transform = "";
+          }, 1200);
+        }
+      }, reduce ? 250 : 4700);
     });
   }
 
