@@ -138,6 +138,26 @@ function activityCards(featured) {
   }).join("");
 }
 
+function countryChip(code, name) {
+  return `<li><img src="/assets/flags/${code}.svg" alt="" width="28" height="20"> ${name}</li>`;
+}
+
+function activeCountries() {
+  const east = [["ug", "Uganda"], ["ke", "Kenya"], ["tz", "Tanzania"], ["rw", "Rwanda"], ["bi", "Burundi"], ["ss", "South Sudan"], ["so", "Somalia"], ["cd", "DR Congo"], ["et", "Ethiopia"], ["er", "Eritrea"], ["dj", "Djibouti"]];
+  const other = [["zm", "Zambia"], ["bw", "Botswana"], ["ng", "Nigeria"], ["gh", "Ghana"], ["cm", "Cameroon"]];
+  return `<div class="active-countries">
+      <h3>Countries where it's active</h3>
+      <div class="country-group">
+        <p class="kicker">East Africa</p>
+        <ul class="country-list">${east.map(([code, name]) => countryChip(code, name)).join("")}</ul>
+      </div>
+      <div class="country-group">
+        <p class="kicker">Other countries</p>
+        <ul class="country-list">${other.map(([code, name]) => countryChip(code, name)).join("")}<li>99+ others</li></ul>
+      </div>
+    </div>`;
+}
+
 const articles = [
   {
     slug: "respectful-conversations",
@@ -245,7 +265,7 @@ pages.push({
   description: "LapoHub is a digital platform for international communication, language exchange, digital learning, interactive activities, and online education.",
   body: `<section class="wrap hero">
     <div>
-      <h1>Chat with people <em>in other countries.</em></h1>
+      <h1><span class="hero-welcome">Welcome to LapoHub</span>Chat with people <em>in other countries.</em></h1>
       <p class="lede">LapoHub is a home for international conversation, language exchange, and digital learning. Chat is the first activity. You open it from a registered account.</p>
       <div class="hero-actions">
         <a class="btn btn-gold btn-pop" href="${REG}" target="_blank" rel="noopener noreferrer">Start</a>
@@ -300,13 +320,10 @@ pages.push({
     <h2>Activities</h2>
     <p class="lede">Chat stays first. Every activity below is open.</p>
     <div class="activity-grid" style="margin-top:16px">${activityCards(true)}</div>
+    ${activeCountries()}
   </section>
-  <section class="wrap section grid-2">
-    <article class="panel">
-      <h2>Keep learning</h2>
-      <p class="muted">AI lessons work in the browser. Progress stays on your device.</p>
-      <p style="margin-top:12px"><a class="btn" href="/ai-lessons/">Browse lessons</a></p>
-    </article>
+  <section class="wrap section grid-2 earn-row">
+    <a class="btn btn-gold earn-btn" href="${REG}" target="_blank" rel="noopener noreferrer">Start earning</a>
     <article class="panel">
       <h2>Community</h2>
       <p class="muted">Contact buttons open the LapoHub WhatsApp Channel. Email is separate.</p>
@@ -363,7 +380,7 @@ pages.push({
   title: "Activities — LapoHub",
   description: "Browse LapoHub activities for conversation, language exchange, learning, and creative practice.",
   body: `${pageHero("Activities", "Choose an activity", "Chat is listed first. Each activity is open and ready to use.")}
-  <section class="wrap section"><div class="card-grid">${activityCards(false)}</div></section>`
+  <section class="wrap section"><div class="card-grid">${activityCards(false)}</div>${activeCountries()}</section>`
 });
 
 function wheelMarkup() {
