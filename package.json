@@ -1,0 +1,10 @@
+{
+  "name": "lapohub",
+  "version": "1.0.0",
+  "private": true,
+  "description": "LapoHub static site for international conversation and digital learning.",
+  "scripts": {
+    "build": "node scripts/build-lapohub.mjs",
+    "start": "npx --yes serve -l 3000"
+  }
+}

@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /dashboard
+Disallow: /admin
+Disallow: /login
+
+Sitemap: https://lapohub.com/sitemap.xml
+Host: lapohub.com

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Dashboard — LapoHub</title>
+<meta name="description" content="Your LapoHub device dashboard for profile, learning progress, bonus status, and account notices.">
+<meta name="robots" content="noindex, follow">
+<meta name="author" content="LapoHub">
+<meta name="theme-color" content="#1c2433">
+<meta name="application-name" content="LapoHub">
+<link rel="canonical" href="https://lapohub.com/dashboard/">
+<meta property="og:site_name" content="LapoHub">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Dashboard — LapoHub">
+<meta property="og:description" content="Your LapoHub device dashboard for profile, learning progress, bonus status, and account notices.">
+<meta property="og:url" content="https://lapohub.com/dashboard/">
+<meta property="og:image" content="https://lapohub.com/assets/og-lapohub.png">
+<meta property="og:image:alt" content="LapoHub — international communication and digital learning">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Dashboard — LapoHub">
+<meta name="twitter:description" content="Your LapoHub device dashboard for profile, learning progress, bonus status, and account notices.">
+<meta name="twitter:image" content="https://lapohub.com/assets/og-lapohub.png">
+<link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png">
+<link rel="apple-touch-icon" href="/favicon-192.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,560;9..144,680&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/lapo.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+  <a class="brand" href="/"><img src="/assets/logo.svg" alt="" width="40" height="40"><span class="brand-text"><strong>LapoHub</strong><em>Connect. Learn. Earn.</em></span></a>
+  <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="site-nav">Menu</button>
+  <nav class="nav" id="site-nav" data-nav>
+    <p class="menu-label">Activities</p>
+    <a href="/chat/">Chat with foreigners</a><a href="/spin/">Spin and win</a><a href="/marketplace/">Marketplace</a><a href="/languages/">Teach local languages</a><a href="/tiktok/">TikTok activities</a><a href="/trivia/">Practice trivia</a><a href="/articles/">Article reading</a><a href="/music/">Music listening</a><a href="/ai-videos/">AI video tasks</a><a href="/ai-lessons/">AI-powered lessons</a><a href="/courses/">Online courses</a><a href="/investment/">Investment learning</a><a href="/tips/">Sports tips</a>
+    <a class="btn btn-wa menu-contact" href="https://whatsapp.com/channel/0029VbE1cQe7j6gAAHMouP20" target="_blank" rel="noopener noreferrer">Contact Us</a>
+  </nav>
+</header>
+<main id="main"><div class="wrap page-hero"><p class="kicker">Dashboard</p><h1>Your space</h1><p class="lede">Profile preferences and learning progress on this device sit beside your welcome bonus promotion.</p></div>
+  <section class="wrap section dash" data-dashboard>
+    <aside class="panel">
+      <h2>Profile</h2>
+      <p>Display name</p>
+      <p class="stat" data-display-name>Not set on this device</p>
+      <form data-profile-form class="form-grid">
+        <label>Name on this device<input name="displayName" maxlength="40" type="text" autocomplete="nickname"></label>
+        <label>Bonus region<select name="region"><option value="UG">Uganda</option><option value="OTHER">Other regions</option></select></label>
+        <button class="btn" type="submit">Save on this device</button>
+        <p data-form-result class="muted" role="status"></p>
+      </form>
+    </aside>
+    <div class="grid-2">
+      <article class="panel"><h3>Welcome bonus</h3><p data-bonus-place></p><p class="stat" data-bonus-amount></p><p data-bonus-status class="muted"></p><p><a href="/bonus/">Terms</a></p></article>
+      <article class="panel"><h3>Account</h3><p class="muted">There is no login session on this website. Create an account on the registration platform.</p><p style="margin-top:8px"><a class="btn" href="https://www.lofthela.com/user/register.php?ref=Lapohub" target="_blank" rel="noopener noreferrer">Register</a></p></article>
+      <article class="panel"><h3>Active account wallet</h3><p class="stat" data-bonus-amount></p><p class="muted">The welcome bonus is a promotion. It is added to your active account wallet and credited for active users immediately after activation.</p></article>
+      <article class="panel"><h3>Bonus credit</h3><p class="muted">Active users are credited immediately after activation. The amount is added to the active account wallet.</p></article>
+      <article class="panel"><h3>Referral</h3><p class="muted">Share the official link. Tracking, if any, happens on the registration platform.</p><p style="margin-top:8px"><a href="/referrals/">Open referral page</a></p></article>
+      <article class="panel"><h3>Learning progress</h3><p data-learning-summary class="muted"></p></article>
+      <article class="panel"><h3>Task history</h3><ul class="list" data-task-history></ul></article>
+      <article class="panel"><h3>Notifications</h3><ul class="list" data-notifications></ul></article>
+    </div>
+  </section>
+  <section class="wrap section">
+    <h2>Activities</h2>
+    <div class="card-grid"><article class="card"><a class="card-link" href="/chat/"><img class="card-photo" src="/assets/activities/activity-chat.jpg" alt=""><div class="icon-row"><span class="pill pill-live">Active</span></div><h3>Chat with foreigners</h3><p class="muted">Open a conversation with people in other countries.</p><p class="meta" style="margin-top:auto">Active</p></a><a class="btn btn-gold start-btn" href="https://www.lofthela.com/user/register.php?ref=Lapohub" target="_blank" rel="noopener noreferrer">Start</a></article><article class="card"><a class="card-link" href="/spin/"><img class="card-photo" src="/assets/activities/activity-spin.jpg" alt=""><div class="icon-row"><span class="pill pill-live">Active</span></div><h3>Spin and win</h3><p class="muted">Spin the wheel and collect an activity reward.</p><p class="meta" style="margin-top:auto">Active</p></a><a class="btn btn-gold start-btn" href="https://www.lofthela.com/user/register.php?ref=Lapohub" target="_blank" rel="noopener noreferrer">Start</a></article><article class="card"><a class="card-link" href="/marketplace/"><img class="card-photo" src="/assets/activities/activity-market.jpg" alt=""><div class="icon-row"><span class="pill pill-live">Active</span></div><h3>Marketplace</h3><p class="muted">Browse study items, descriptions, and prices.</p><p class="meta" style="margin-top:auto">Active</p></a><a class="btn btn-gold start-btn" href="https://www.lofthela.com/user/register.php?ref=Lapohub" target="_blank" rel="noopener noreferrer">Start</a></article><article class="card"><a class="card-link" href="/languages/"><img class="card-photo" src="/assets/activities/activity-languages.jpg" alt=""><div class="icon-row"><span class="pill pill-live">Active</span></div><h3>Teach local languages</h3><p class="muted">Swahili, Luganda, and other African languages.</p><p class="meta" style="margin-top:auto">Active</p></a><a class="btn btn-gold start-btn" href="https://www.lofthela.com/user/register.php?ref=Lapohub" target="_blank" rel="noopener noreferrer">Start</a></article><article class="card"><a class="card-link" href="/tiktok/"><img class="card-photo" src="/assets/activities/activity-video.jpg" alt=""><div class="icon-row"><span class="pill pill-live">Active</span></div><h3>TikTok activities</h3><p class="muted">Short creative tasks with clear instructions.</p><p class="meta" style="margin-top:auto">Active</p></a><a class="btn btn-gold start-btn" href="https://www.lofthela.com/user/register.php?ref=Lapohub" target="_blank" rel="noopener noreferrer">Start</a></article><article class="card"><a class="card-link" href="/trivia/"><img class="card-photo" src="/assets/activities/activity-trivia.jpg" alt=""><div class="icon-row"><span class="pill pill-live">Active</span></div><h3>Practice trivia</h3><p class="muted">Answer questions and keep your score.</p><p class="meta" style="margin-top:auto">Active</p></a><a class="btn btn-gold start-btn" href="https://www.lofthela.com/user/register.php?ref=Lapohub" target="_blank" rel="noopener noreferrer">Start</a></article><article class="card"><a class="card-link" href="/articles/"><img class="card-photo" src="/assets/activities/activity-articles.jpg" alt=""><div class="icon-row"><span class="pill pill-live">Active</span></div><h3>Article reading</h3><p class="muted">Read short guides with a progress bar.</p><p class="meta" style="margin-top:auto">Active</p></a><a class="btn btn-gold start-btn" href="https://www.lofthela.com/user/register.php?ref=Lapohub" target="_blank" rel="noopener noreferrer">Start</a></article><article class="card"><a class="card-link" href="/music/"><img class="card-photo" src="/assets/activities/activity-music.jpg" alt=""><div class="icon-row"><span class="pill pill-live">Active</span></div><h3>Music listening</h3><p class="muted">Play original pieces in the listening room.</p><p class="meta" style="margin-top:auto">Active</p></a><a class="btn btn-gold start-btn" href="https://www.lofthela.com/user/register.php?ref=Lapohub" target="_blank" rel="noopener noreferrer">Start</a></article><article class="card"><a class="card-link" href="/ai-videos/"><img class="card-photo" src="/assets/activities/activity-aivideo.jpg" alt=""><div class="icon-row"><span class="pill pill-live">Active</span></div><h3>AI video tasks</h3><p class="muted">Plan a short learning video and save your brief.</p><p class="meta" style="margin-top:auto">Active</p></a><a class="btn btn-gold start-btn" href="https://www.lofthela.com/user/register.php?ref=Lapohub" target="_blank" rel="noopener noreferrer">Start</a></article><article class="card"><a class="card-link" href="/ai-lessons/"><img class="card-photo" src="/assets/activities/activity-ailessons.jpg" alt=""><div class="icon-row"><span class="pill pill-live">Active</span></div><h3>AI-powered lessons</h3><p class="muted">Beginner lessons on tools, prompts, and productivity.</p><p class="meta" style="margin-top:auto">Active</p></a><a class="btn btn-gold start-btn" href="https://www.lofthela.com/user/register.php?ref=Lapohub" target="_blank" rel="noopener noreferrer">Start</a></article><article class="card"><a class="card-link" href="/courses/"><img class="card-photo" src="/assets/activities/activity-courses.jpg" alt=""><div class="icon-row"><span class="pill pill-live">Active</span></div><h3>Online courses</h3><p class="muted">Work through lessons and track what you finish.</p><p class="meta" style="margin-top:auto">Active</p></a><a class="btn btn-gold start-btn" href="https://www.lofthela.com/user/register.php?ref=Lapohub" target="_blank" rel="noopener noreferrer">Start</a></article><article class="card"><a class="card-link" href="/investment/"><img class="card-photo" src="/assets/activities/activity-invest.jpg" alt=""><div class="icon-row"><span class="pill pill-live">Active</span></div><h3>Investment learning</h3><p class="muted">Financial literacy with clear risk notes.</p><p class="meta" style="margin-top:auto">Active</p></a><a class="btn btn-gold start-btn" href="https://www.lofthela.com/user/register.php?ref=Lapohub" target="_blank" rel="noopener noreferrer">Start</a></article><article class="card"><a class="card-link" href="/tips/"><img class="card-photo" src="/assets/activities/activity-sports.jpg" alt=""><div class="icon-row"><span class="pill pill-live">Active</span></div><h3>Sports tips</h3><p class="muted">Adult sports notes. No betting on this site.</p><p class="meta" style="margin-top:auto">Active</p></a><a class="btn btn-gold start-btn" href="https://www.lofthela.com/user/register.php?ref=Lapohub" target="_blank" rel="noopener noreferrer">Start</a></article></div>
+  </section></main>
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div>
+      <strong>LapoHub</strong>
+      <p class="fine">International communication, language exchange, digital learning, and interactive activities.</p>
+      <p class="fine">The welcome bonus is a promotion. It is added to your active account wallet and credited for active users immediately after activation.</p>
+    </div>
+    <div>
+      <strong>Explore</strong>
+      <div class="link-list">
+        <a href="/chat/">Chat with foreigners</a>
+        <a href="/activities/">Activities</a>
+        <a href="/bonus/">Welcome bonus</a>
+        <a href="/referrals/">Referral link</a>
+        <a href="/about/">About</a>
+        <a href="/terms/">Terms</a>
+        <a href="/privacy/">Privacy</a>
+      </div>
+    </div>
+    <div>
+      <strong>Support</strong>
+      <div class="link-list">
+        <a href="https://whatsapp.com/channel/0029VbE1cQe7j6gAAHMouP20" target="_blank" rel="noopener noreferrer">Contact Us</a>
+        <a href="https://whatsapp.com/channel/0029VbE1cQe7j6gAAHMouP20" target="_blank" rel="noopener noreferrer">Join WhatsApp Channel</a>
+        <a href="mailto:lapohub2@gmail.com">Email Support</a>
+      </div>
+    </div>
+  </div>
+  <div class="wrap fine" style="margin-top:18px">© 2026 LapoHub · <a href="https://lapohub.com/">lapohub.com</a></div>
+</footer>
+<nav class="bottom-nav" aria-label="Primary">
+  <a href="/">Home</a>
+  <a href="/chat/">Chat</a>
+  <a href="/activities/">Activities</a>
+  <a href="/courses/">Learn</a>
+  <a href="/dashboard/" aria-current="page">Account</a>
+</nav>
+<script src="/assets/lapo.js" defer></script>
+<script src="/pwa-install.js" defer></script>
+</body>
+</html>
