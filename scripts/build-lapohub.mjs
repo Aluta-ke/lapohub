@@ -250,20 +250,51 @@ pages.push({
   body: `<section class="wrap hero">
     <div>
       <h1>Chat with people <em>in other countries.</em></h1>
-      <p class="lede">LapoHub is a home for international conversation, language exchange, and digital learning. Chat is the first activity. You open it from a registered account, not from a simulated window on this page.</p>
+      <p class="lede">LapoHub is a home for international conversation, language exchange, and digital learning. Chat is the first activity. The panel shows a labeled sample of the layout. Real chat opens from a registered account.</p>
       <div class="hero-actions">
         <a class="btn btn-gold btn-pop" href="${REG}" target="_blank" rel="noopener noreferrer">Start</a>
         <a class="btn btn-live" href="/chat/">How chat works</a>
         <a class="btn btn-wa" href="${WA}" target="_blank" rel="noopener noreferrer">Contact Us</a>
       </div>
     </div>
-    <aside class="chat-board" aria-label="Conversation starters">
-      <p class="kicker" style="color:#e3b15a"><span class="live-dot" aria-hidden="true"></span>Open now</p>
-      <h2 style="color:#fffaf4">Pick a topic and start talking</h2>
-      <div class="bubbles">
-        <div class="bubble"><strong>Say this</strong>Hey — what is lunch like where you are today?</div>
-        <div class="bubble"><strong>Or this</strong>Teach me hello in your language. I will try it back.</div>
-        <div class="bubble"><strong>Or this</strong>I am learning something new this week. What about you?</div>
+    <aside class="chat-board" aria-label="Sample preview of Live Global Chat">
+      <p class="lgc-note">Sample preview. The profiles, messages, and number here are design examples. They are not registered members, live sessions, or earnings.</p>
+      <p class="kicker" style="color:#e3b15a">Layout sample</p>
+      <h2 style="color:#fffaf4">Live Global Chat</h2>
+      <p class="lgc-sub">Connect with people around the world.</p>
+      <div class="lgc-count">
+        <span class="lgc-count-num">24</span>
+        <span>Sample online count. Member sessions are not connected to this page yet, so this figure does not change.</span>
+      </div>
+      <div class="lgc-feed">
+        <article class="lgc-row">
+          <div class="lgc-avatar" role="img" aria-label="Illustrated sample profile, not a member"><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="32" fill="#3d2a22"/><circle cx="32" cy="28" r="12" fill="#c68642"/><path d="M14 58c3-12 10-16 18-16s15 4 18 16" fill="#8d5524"/><path d="M20 24c2-10 22-12 26-2-6-6-18-6-26 2z" fill="#1a120e"/></svg><span class="lgc-presence" aria-hidden="true"></span></div>
+          <div>
+            <p class="lgc-who"><strong>Sample A</strong><span class="lgc-flag" aria-label="Kenya"><svg viewBox="0 0 16 16" aria-hidden="true"><rect width="16" height="5" fill="#111"/><rect y="5" width="16" height="2" fill="#fff"/><rect y="7" width="16" height="2" fill="#bb0000"/><rect y="9" width="16" height="2" fill="#fff"/><rect y="11" width="16" height="5" fill="#006600"/></svg></span><span>Kenya</span><span class="lgc-tag">Sample</span></p>
+            <p class="lgc-msg">Hello. What are you learning this week?</p>
+          </div>
+        </article>
+        <article class="lgc-row">
+          <div class="lgc-avatar" role="img" aria-label="Illustrated sample profile, not a member"><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="32" fill="#2a3548"/><circle cx="32" cy="30" r="12" fill="#e0ac69"/><path d="M16 60c2-14 10-18 16-18s14 4 16 18" fill="#246247"/><path d="M18 26c4-8 24-8 28 0-2-8-26-8-28 0z" fill="#3a2416"/></svg><span class="lgc-presence" aria-hidden="true"></span></div>
+          <div>
+            <p class="lgc-who"><strong>Sample B</strong><span class="lgc-flag" aria-label="Mexico"><svg viewBox="0 0 16 16" aria-hidden="true"><rect width="5.4" height="16" fill="#006847"/><rect x="5.4" width="5.2" height="16" fill="#fff"/><rect x="10.6" width="5.4" height="16" fill="#ce1126"/></svg></span><span>Mexico</span><span class="lgc-tag">Sample</span></p>
+            <p class="lgc-msg">I can practice English if you share one greeting.</p>
+          </div>
+        </article>
+        <article class="lgc-row">
+          <div class="lgc-avatar" role="img" aria-label="Illustrated sample profile, not a member"><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="32" fill="#62456f"/><circle cx="32" cy="30" r="12" fill="#8d5524"/><path d="M15 59c3-13 11-17 17-17s14 4 17 17" fill="#b5523a"/><path d="M16 28c2-14 30-14 32 0-8-8-24-8-32 0z" fill="#1a120e"/></svg><span class="lgc-presence" aria-hidden="true"></span></div>
+          <div>
+            <p class="lgc-who"><strong>Sample C</strong><span class="lgc-flag" aria-label="Brazil"><svg viewBox="0 0 16 16" aria-hidden="true"><rect width="16" height="16" fill="#009c3b"/><polygon points="8,2 15,8 8,14 1,8" fill="#ffdf00"/><circle cx="8" cy="8" r="2.3" fill="#002776"/></svg></span><span>Brazil</span><span class="lgc-tag">Sample</span></p>
+            <p class="lgc-msg">Lunch here is rice and beans. What is lunch like for you?</p>
+          </div>
+        </article>
+        <article class="lgc-row">
+          <div class="lgc-avatar" role="img" aria-label="Illustrated sample profile, not a member"><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="32" fill="#1c2433"/><circle cx="32" cy="30" r="12" fill="#f1c27d"/><path d="M16 60c2-14 10-18 16-18s14 4 16 18" fill="#2a3548"/><path d="M20 22c6-6 20-6 24 2-8-4-18-4-24-2z" fill="#111"/></svg><span class="lgc-presence" aria-hidden="true"></span></div>
+          <div>
+            <p class="lgc-who"><strong>Sample D</strong><span class="lgc-flag" aria-label="Japan"><svg viewBox="0 0 16 16" aria-hidden="true"><rect width="16" height="16" fill="#fff"/><circle cx="8" cy="8" r="3.2" fill="#bc002d"/></svg></span><span>Japan</span><span class="lgc-tag">Sample</span></p>
+            <p class="lgc-msg">Good evening. I am reviewing a few phrases before class.</p>
+          </div>
+        </article>
       </div>
       <div class="topics">
         <a class="topic" href="${REG}" target="_blank" rel="noopener noreferrer">Food today</a>
@@ -275,7 +306,7 @@ pages.push({
         <a class="topic" href="${REG}" target="_blank" rel="noopener noreferrer">Weekend plans</a>
         <a class="topic" href="${REG}" target="_blank" rel="noopener noreferrer">A local custom</a>
       </div>
-      <div class="chat-start"><a class="btn btn-gold" href="${REG}" target="_blank" rel="noopener noreferrer">Start chat</a></div>
+      <div class="chat-start"><a class="btn btn-gold" href="${REG}" target="_blank" rel="noopener noreferrer">Join the Conversation</a></div>
     </aside>
   </section>
   <section class="wrap section">
@@ -322,7 +353,7 @@ pages.push({
   <section class="wrap section">
     <h2>Questions</h2>
     <div class="grid-2" style="margin-top:12px">
-      <article class="panel"><h3>Where does chat happen?</h3><p class="muted">After you register, chat opens in that account. LapoHub does not show a pretend inbox or live member count.</p></article>
+      <article class="panel"><h3>Where does chat happen?</h3><p class="muted">After you register, chat opens in that account. The homepage panel is a labeled sample layout, not a live member count.</p></article>
       <article class="panel"><h3>When is the welcome bonus credited?</h3><p class="muted">It is a promotion. It is added to your active account wallet and credited for active users immediately after activation.</p></article>
       <article class="panel"><h3>Is the welcome bonus already mine?</h3><p class="muted">It is a promotion. After activation it is added to your active account wallet. Active users are credited immediately after activation.</p></article>
       <article class="panel"><h3>Which link should I share?</h3><p class="muted">Share only the official registration URL published on the referral page.</p></article>
