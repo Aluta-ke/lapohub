@@ -263,13 +263,14 @@
     var segments = ["Conversation", "Languages", "Practice quiz", "Reading", "Music", "Courses"];
     var reduceQuery = window.matchMedia ? window.matchMedia("(prefers-reduced-motion: reduce)") : null;
     if (!reduceQuery || !reduceQuery.matches) wheel.classList.add("is-idling");
-    button.addEventListener("click", function () {
+
+    function spin(fromUser) {
       if (busy) return;
       var today = new Date().toISOString().slice(0, 10);
       var spins = read("lapohub.spins", { date: today, count: 0 });
       if (spins.date !== today) spins = { date: today, count: 0 };
       if (spins.count >= 5) {
-        if (result) result.textContent = "You have used today's five spins. Come back tomorrow.";
+        if (fromUser && result) result.textContent = "You have used today's five spins. Come back tomorrow.";
         return;
       }
       busy = true;
@@ -308,7 +309,29 @@
           }, 1200);
         }
       }, reduce ? 250 : 4700);
-    });
+    }
+
+    button.addEventListener("click", function () { spin(true); });
+
+    if (reduceQuery && reduceQuery.matches) return;
+    var seen = false;
+    function begin() {
+      if (seen) return;
+      seen = true;
+      spin(false);
+    }
+    if (stage && "IntersectionObserver" in window) {
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          observer.disconnect();
+          begin();
+        });
+      }, { threshold: 0.55 });
+      observer.observe(stage);
+    } else {
+      begin();
+    }
   }
 
   var tracks = [
@@ -513,4 +536,151 @@
   initCatalog();
   initAge();
   paintDashboard();
+  initLiveChat();
+
+  function initLiveChat() {
+    var root = document.querySelector("[data-live-chat]");
+    if (!root) return;
+    var countWrap = root.querySelector("[data-live-count-wrap]");
+    var countEl = root.querySelector("[data-live-count]");
+    var feed = root.querySelector("[data-live-feed]");
+    var empty = root.querySelector("[data-live-empty]");
+    if (!countWrap || !countEl || !feed || !empty) return;
+    var rows = new Map();
+
+    function clip(value, max) {
+      return String(value == null ? "" : value).replace(/\s+/g, " ").trim().slice(0, max);
+    }
+
+    function flag(code) {
+      if (!/^[A-Z]{2}$/.test(code)) return "";
+      return String.fromCodePoint(127397 + code.charCodeAt(0), 127397 + code.charCodeAt(1));
+    }
+
+    function safePhoto(url) {
+      if (typeof url !== "string") return "";
+      if (url.indexOf("/assets/") === 0 && url.indexOf("..") === -1) return url;
+      try {
+        var parsed = new URL(url);
+        if (parsed.protocol === "https:") return parsed.href;
+      } catch (e) {}
+      return "";
+    }
+
+    function itemsFrom(payload) {
+      var list = payload && Array.isArray(payload.activity) ? payload.activity : [];
+      var kept = [];
+      var ids = {};
+      list.forEach(function (item) {
+        if (!item || typeof item.id !== "string" || !item.id || ids[item.id]) return;
+        var name = clip(item.name, 40);
+        var text = clip(item.text, 180);
+        if (!name || !text) return;
+        ids[item.id] = true;
+        kept.push({
+          id: item.id.slice(0, 80),
+          name: name,
+          text: text,
+          country: clip(item.country, 2).toUpperCase(),
+          photo: safePhoto(item.photo)
+        });
+      });
+      return kept.slice(0, 8);
+    }
+
+    function avatar(item) {
+      var box = document.createElement("div");
+      box.className = "lgc-avatar";
+      if (item.photo) {
+        var img = document.createElement("img");
+        img.src = item.photo;
+        img.alt = "";
+        box.appendChild(img);
+      } else {
+        box.setAttribute("role", "img");
+        box.setAttribute("aria-label", "");
+        var letter = document.createElement("span");
+        letter.className = "lgc-letter";
+        letter.textContent = item.name.charAt(0);
+        box.appendChild(letter);
+      }
+      var dot = document.createElement("span");
+      dot.className = "lgc-presence";
+      dot.setAttribute("aria-hidden", "true");
+      box.appendChild(dot);
+      return box;
+    }
+
+    function buildRow(item) {
+      var row = document.createElement("article");
+      row.className = "lgc-row";
+      row.dataset.id = item.id;
+      row.appendChild(avatar(item));
+      var body = document.createElement("div");
+      var who = document.createElement("p");
+      who.className = "lgc-who";
+      var name = document.createElement("strong");
+      name.textContent = item.name;
+      who.appendChild(name);
+      var mark = flag(item.country);
+      if (mark) {
+        var country = document.createElement("span");
+        country.textContent = mark + " " + item.country;
+        who.appendChild(country);
+      }
+      var msg = document.createElement("p");
+      msg.className = "lgc-msg";
+      msg.textContent = item.text;
+      body.appendChild(who);
+      body.appendChild(msg);
+      row.appendChild(body);
+      return row;
+    }
+
+    function render(payload) {
+      var online = payload && payload.connected === true && Number.isInteger(payload.online) && payload.online >= 0
+        ? payload.online
+        : null;
+      if (online === null) {
+        countWrap.hidden = true;
+      } else {
+        countEl.textContent = String(online);
+        countWrap.hidden = false;
+      }
+      var next = itemsFrom(payload && payload.connected === true ? payload : { activity: [] });
+      var nextIds = {};
+      next.forEach(function (item) { nextIds[item.id] = item; });
+      Array.from(rows.keys()).forEach(function (id) {
+        if (nextIds[id]) return;
+        var row = rows.get(id);
+        rows.delete(id);
+        row.classList.add("is-leaving");
+        window.setTimeout(function () { if (row.parentNode) row.parentNode.removeChild(row); }, 280);
+      });
+      next.forEach(function (item) {
+        var current = rows.get(item.id);
+        if (!current) {
+          current = buildRow(item);
+          rows.set(item.id, current);
+          feed.appendChild(current);
+          return;
+        }
+        var name = current.querySelector("strong");
+        var msg = current.querySelector(".lgc-msg");
+        if (name) name.textContent = item.name;
+        if (msg) msg.textContent = item.text;
+      });
+      empty.hidden = next.length > 0;
+    }
+
+    function tick() {
+      fetch("/data/live-chat.json", { cache: "no-store" })
+        .then(function (response) { return response.ok ? response.json() : null; })
+        .then(function (payload) { render(payload); })
+        .catch(function () { render(null); });
+    }
+
+    tick();
+    window.setInterval(tick, 12000);
+  }
 })();
