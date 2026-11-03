@@ -273,29 +273,33 @@ pages.push({
         <a class="btn btn-wa" href="${WA}" target="_blank" rel="noopener noreferrer">Contact Us</a>
       </div>
     </div>
-    <aside class="chat-board" aria-label="Live Global Chat" data-live-chat>
-      <h2 style="color:#fffaf4">LIVE GLOBAL CHAT</h2>
-      <p class="lgc-sub">Connect with people around the world.</p>
-      <div class="lgc-count" data-live-count-wrap hidden>
-        <span class="live-dot" aria-hidden="true"></span>
-        <span class="lgc-count-num" data-live-count>0</span>
-        <span>online</span>
+    <div class="lgc-stack" data-live-chat>
+      <aside class="lgc-card" aria-label="Live Global Chat">
+        <header class="lgc-head">
+          <div class="lgc-title">
+            <span class="live-dot" aria-hidden="true"></span>
+            <h2>Live Global Chat</h2>
+          </div>
+          <p class="lgc-status">
+            <strong data-live-count>208+</strong>
+            <span data-live-count-label>People online</span>
+          </p>
+        </header>
+        <div class="lgc-body">
+          <ul class="lgc-members" data-live-members></ul>
+          <div class="lgc-feed" data-live-feed></div>
+          <p class="lgc-reward"><span>Potential welcome bonus</span><strong>UGX 10,000</strong><a href="/bonus/">Eligibility</a></p>
+          <p class="lgc-fine">Uganda promotion. Other regions: USD 2. An estimate, not a guaranteed payment.</p>
+          <a class="lgc-join" href="${REG}" target="_blank" rel="noopener noreferrer">Start Chat →</a>
+        </div>
+      </aside>
+      <div class="lgc-ticker" data-live-ticker aria-label="Illustrative activity examples">
+        <p class="lgc-ticker-live"><span class="lgc-ticker-live-dot" aria-hidden="true"></span>LIVE</p>
+        <div class="lgc-ticker-viewport">
+          <div class="lgc-ticker-track" data-live-ticker-track></div>
+        </div>
       </div>
-      <div class="lgc-feed" data-live-feed>
-        <p class="lgc-empty" data-live-empty>Public messages from members will appear here.</p>
-      </div>
-      <div class="topics">
-        <a class="topic" href="${REG}" target="_blank" rel="noopener noreferrer">Food today</a>
-        <a class="topic" href="${REG}" target="_blank" rel="noopener noreferrer">One greeting</a>
-        <a class="topic" href="${REG}" target="_blank" rel="noopener noreferrer">Music you love</a>
-        <a class="topic" href="${REG}" target="_blank" rel="noopener noreferrer">A place you know</a>
-        <a class="topic" href="${REG}" target="_blank" rel="noopener noreferrer">Swahili hello</a>
-        <a class="topic" href="${REG}" target="_blank" rel="noopener noreferrer">Luganda hello</a>
-        <a class="topic" href="${REG}" target="_blank" rel="noopener noreferrer">Weekend plans</a>
-        <a class="topic" href="${REG}" target="_blank" rel="noopener noreferrer">A local custom</a>
-      </div>
-      <div class="chat-start"><a class="btn btn-gold" href="${REG}" target="_blank" rel="noopener noreferrer">Join the Conversation</a></div>
-    </aside>
+    </div>
   </section>
   <section class="wrap section">
     <h2>Start with two steps</h2>
@@ -337,7 +341,7 @@ pages.push({
   <section class="wrap section">
     <h2>Questions</h2>
     <div class="grid-2" style="margin-top:12px">
-      <article class="panel"><h3>Where does chat happen?</h3><p class="muted">After you register, chat opens in that account. The homepage lists only public messages supplied by the site feed.</p></article>
+      <article class="panel"><h3>Where does chat happen?</h3><p class="muted">After you register, chat opens in that account.</p></article>
       <article class="panel"><h3>When is the welcome bonus credited?</h3><p class="muted">It is a promotion. It is added to your active account wallet and credited for active users immediately after activation.</p></article>
       <article class="panel"><h3>Is the welcome bonus already mine?</h3><p class="muted">It is a promotion. After activation it is added to your active account wallet. Active users are credited immediately after activation.</p></article>
       <article class="panel"><h3>Which link should I share?</h3><p class="muted">Share only the official registration URL published on the referral page.</p></article>

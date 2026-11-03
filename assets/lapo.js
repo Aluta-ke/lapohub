@@ -555,69 +555,92 @@
   function initLiveChat() {
     var root = document.querySelector("[data-live-chat]");
     if (!root) return;
-    var countWrap = root.querySelector("[data-live-count-wrap]");
     var countEl = root.querySelector("[data-live-count]");
+    var membersEl = root.querySelector("[data-live-members]");
     var feed = root.querySelector("[data-live-feed]");
-    var empty = root.querySelector("[data-live-empty]");
-    if (!countWrap || !countEl || !feed || !empty) return;
-    var rows = new Map();
+    var tickerTrack = root.querySelector("[data-live-ticker-track]");
+    if (!countEl || !membersEl || !feed || !tickerTrack) return;
 
-    function clip(value, max) {
-      return String(value == null ? "" : value).replace(/\s+/g, " ").trim().slice(0, max);
-    }
+    var counts = [208, 214, 221, 230, 226, 219, 212, 217, 224, 233, 218, 206];
+    var countIndex = 0;
+    var peopleStart = 0;
+    var messageStart = 0;
+    var people = [
+      { name: "Emily", country: "US" },
+      { name: "Daniel", country: "CA" },
+      { name: "Anna", country: "DE" },
+      { name: "James", country: "GB" },
+      { name: "Sophia", country: "AU" },
+      { name: "David", country: "FR" },
+      { name: "Emma", country: "NL" },
+      { name: "Lars", country: "SE" },
+      { name: "Ingrid", country: "NO" },
+      { name: "Marco", country: "IT" },
+      { name: "Grace", country: "UG" },
+      { name: "Sarah", country: "KE" }
+    ];
+    var messages = [
+      { name: "Emily", country: "US", text: "Hi! Can someone teach me basic Swahili?" },
+      { name: "Anna", country: "DE", text: "I'm from Germany and I would love to learn Luganda." },
+      { name: "David", country: "FR", text: "Habari! I want to practise my Swahili." },
+      { name: "James", country: "GB", text: "Can someone teach me how to greet people in Luganda?" },
+      { name: "Sophia", country: "AU", text: "I am learning African languages. Anyone available to chat?" },
+      { name: "Daniel", country: "CA", text: "I would love to make friends in Uganda." },
+      { name: "Emma", country: "NL", text: "How do you say 'How are you?' in Swahili?" },
+      { name: "Lars", country: "SE", text: "I want to practise African languages with someone from Kenya." },
+      { name: "Ingrid", country: "NO", text: "Hello from Norway. I would love friends in Uganda." },
+      { name: "Marco", country: "IT", text: "Ciao! Can we talk and practise Luganda together?" },
+      { name: "Emily", country: "US", text: "I would love a friendly chat with someone from Uganda." },
+      { name: "Anna", country: "DE", text: "Habari! Please teach me a simple Swahili greeting." },
+      { name: "Grace", country: "UG", text: "Hello from Uganda. I can share a simple Luganda greeting." },
+      { name: "Sarah", country: "KE", text: "Habari from Kenya. Shall we practise Swahili together?" }
+    ];
+    var tickerIcons = {
+      join: '<svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="6" cy="5.2" r="2.1" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M2.6 13c.4-2.1 1.8-3.2 3.4-3.2s3 .1 3.4 3.2" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path d="M11 6.2v3.6M9.2 8h3.6" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>',
+      register: '<svg viewBox="0 0 16 16" aria-hidden="true"><rect x="3" y="2.4" width="10" height="11.2" rx="1.4" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M5.4 6.4h5.2M5.4 9h3.4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>',
+      chat: '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.8 3.2h10.4v6.8H6.4L2.8 12.6V3.2z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>',
+      activity: '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2.2l1.4 3 3.3.4-2.4 2.2.7 3.3L8 9.5 4.9 11.1l.7-3.3L3.2 5.6l3.3-.4z" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>',
+      bonus: '<svg viewBox="0 0 16 16" aria-hidden="true"><rect x="2.4" y="7" width="11.2" height="6.4" rx="1" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M8 7v6.4M2.4 9.2h11.2" stroke="currentColor" stroke-width="1.3"/><path d="M8 7C6.8 4.8 4.6 5 4.6 6.4S7 7 8 7s2.4-1.4 3.4-.6S9.2 4.8 8 7z" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>'
+    };
+    var activities = [
+      { country: "UG", kind: "join", text: "Example \u00b7 James from Uganda joins LapoHub." },
+      { country: "KE", kind: "register", text: "Example \u00b7 Sarah from Kenya registers an account." },
+      { country: "TZ", kind: "chat", text: "Example \u00b7 Grace from Tanzania opens a practice chat." },
+      { country: "CA", kind: "chat", text: "Example \u00b7 Emily from Canada opens a practice chat." },
+      { country: "UG", kind: "bonus", text: "Example \u00b7 David from Uganda may qualify for UGX 10,000." },
+      { country: "US", kind: "activity", text: "Example \u00b7 Daniel from the USA tries an activity." },
+      { country: "DE", kind: "join", text: "Example \u00b7 Anna from Germany joins LapoHub." },
+      { country: "GB", kind: "activity", text: "Example \u00b7 Michael from the UK tries an activity." },
+      { country: "AU", kind: "chat", text: "Example \u00b7 Sophia from Australia says hello." },
+      { country: "FR", kind: "register", text: "Example \u00b7 David from France registers an account." },
+      { country: "NL", kind: "join", text: "Example \u00b7 Sarah from the Netherlands joins LapoHub." },
+      { country: "KE", kind: "activity", text: "Example \u00b7 James from Kenya tries an activity." }
+    ];
+    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    function flag(code) {
-      if (!/^[A-Z]{2}$/.test(code)) return "";
-      return String.fromCodePoint(127397 + code.charCodeAt(0), 127397 + code.charCodeAt(1));
-    }
-
-    function safePhoto(url) {
-      if (typeof url !== "string") return "";
-      if (url.indexOf("/assets/") === 0 && url.indexOf("..") === -1) return url;
-      try {
-        var parsed = new URL(url);
-        if (parsed.protocol === "https:") return parsed.href;
-      } catch (e) {}
-      return "";
-    }
-
-    function itemsFrom(payload) {
-      var list = payload && Array.isArray(payload.activity) ? payload.activity : [];
-      var kept = [];
-      var ids = {};
-      list.forEach(function (item) {
-        if (!item || typeof item.id !== "string" || !item.id || ids[item.id]) return;
-        var name = clip(item.name, 40);
-        var text = clip(item.text, 180);
-        if (!name || !text) return;
-        ids[item.id] = true;
-        kept.push({
-          id: item.id.slice(0, 80),
-          name: name,
-          text: text,
-          country: clip(item.country, 2).toUpperCase(),
-          photo: safePhoto(item.photo)
-        });
-      });
-      return kept.slice(0, 8);
-    }
-
-    function avatar(item) {
-      var box = document.createElement("div");
-      box.className = "lgc-avatar";
-      if (item.photo) {
-        var img = document.createElement("img");
-        img.src = item.photo;
-        img.alt = "";
-        box.appendChild(img);
-      } else {
-        box.setAttribute("role", "img");
-        box.setAttribute("aria-label", "");
-        var letter = document.createElement("span");
-        letter.className = "lgc-letter";
-        letter.textContent = item.name.charAt(0);
-        box.appendChild(letter);
+    function personByName(name) {
+      for (var i = 0; i < people.length; i++) {
+        if (people[i].name === name) return people[i];
       }
+      return people[0];
+    }
+
+    function soften(node) {
+      if (reduce || !node) return;
+      node.classList.remove("lgc-soft");
+      void node.offsetWidth;
+      node.classList.add("lgc-soft");
+    }
+
+    function portrait(sizeClass) {
+      var box = document.createElement("div");
+      box.className = "lgc-avatar " + sizeClass;
+      var img = document.createElement("img");
+      img.alt = "";
+      img.width = 160;
+      img.height = 160;
+      img.decoding = "async";
+      box.appendChild(img);
       var dot = document.createElement("span");
       dot.className = "lgc-presence";
       dot.setAttribute("aria-hidden", "true");
@@ -625,76 +648,134 @@
       return box;
     }
 
-    function buildRow(item) {
+    function flagNode() {
+      var img = document.createElement("img");
+      img.className = "lgc-flag";
+      img.alt = "";
+      img.width = 18;
+      img.height = 12;
+      return img;
+    }
+
+    function setFlag(img, code) {
+      var next = "/assets/flags/" + code.toLowerCase() + ".svg";
+      if (img.getAttribute("src") !== next) img.src = next;
+    }
+
+    function setPortrait(box, person) {
+      var img = box.querySelector("img");
+      var next = "/assets/promo/" + person.name.toLowerCase() + ".jpg";
+      if (img.getAttribute("src") === next) return;
+      img.onerror = function () {
+        img.onerror = null;
+        img.src = "/assets/promo/fallback.jpg";
+      };
+      img.src = next;
+    }
+
+    for (var m = 0; m < 5; m++) {
+      var item = document.createElement("li");
+      item.className = "lgc-member";
+      item.appendChild(portrait("lgc-avatar-lg"));
+      var name = document.createElement("span");
+      name.className = "lgc-member-name";
+      item.appendChild(name);
+      item.appendChild(flagNode());
+      membersEl.appendChild(item);
+    }
+
+    for (var r = 0; r < 3; r++) {
       var row = document.createElement("article");
       row.className = "lgc-row";
-      row.dataset.id = item.id;
-      row.appendChild(avatar(item));
+      row.appendChild(portrait("lgc-avatar-sm"));
       var body = document.createElement("div");
       var who = document.createElement("p");
       who.className = "lgc-who";
-      var name = document.createElement("strong");
-      name.textContent = item.name;
-      who.appendChild(name);
-      var mark = flag(item.country);
-      if (mark) {
-        var country = document.createElement("span");
-        country.textContent = mark + " " + item.country;
-        who.appendChild(country);
-      }
+      var strong = document.createElement("strong");
+      who.appendChild(strong);
+      who.appendChild(flagNode());
       var msg = document.createElement("p");
       msg.className = "lgc-msg";
-      msg.textContent = item.text;
       body.appendChild(who);
       body.appendChild(msg);
       row.appendChild(body);
-      return row;
+      feed.appendChild(row);
     }
 
-    function render(payload) {
-      var online = payload && payload.connected === true && Number.isInteger(payload.online) && payload.online >= 0
-        ? payload.online
-        : null;
-      if (online === null) {
-        countWrap.hidden = true;
-      } else {
-        countEl.textContent = String(online);
-        countWrap.hidden = false;
+    function iconNode(kind) {
+      var wrap = document.createElement("span");
+      wrap.className = "lgc-tick-icon lgc-tick-" + kind;
+      wrap.innerHTML = tickerIcons[kind] || tickerIcons.join;
+      return wrap;
+    }
+
+    function addTickerSet(hidden) {
+      activities.forEach(function (item) {
+        var tick = document.createElement("span");
+        tick.className = "lgc-tick";
+        if (hidden) tick.setAttribute("aria-hidden", "true");
+        tick.appendChild(iconNode(item.kind));
+        var flag = flagNode();
+        setFlag(flag, item.country);
+        tick.appendChild(flag);
+        var label = document.createElement("span");
+        label.className = "lgc-tick-text";
+        label.textContent = item.text;
+        tick.appendChild(label);
+        tickerTrack.appendChild(tick);
+      });
+    }
+    addTickerSet(false);
+    addTickerSet(true);
+
+    function paintMembers(animate) {
+      var slots = membersEl.children;
+      for (var i = 0; i < slots.length; i++) {
+        var person = people[(peopleStart + i) % people.length];
+        var slot = slots[i];
+        var nameEl = slot.querySelector(".lgc-member-name");
+        if (nameEl.textContent === person.name) continue;
+        setPortrait(slot.querySelector(".lgc-avatar"), person);
+        nameEl.textContent = person.name;
+        setFlag(slot.querySelector(".lgc-flag"), person.country);
+        if (animate) soften(slot);
       }
-      var next = itemsFrom(payload && payload.connected === true ? payload : { activity: [] });
-      var nextIds = {};
-      next.forEach(function (item) { nextIds[item.id] = item; });
-      Array.from(rows.keys()).forEach(function (id) {
-        if (nextIds[id]) return;
-        var row = rows.get(id);
-        rows.delete(id);
-        row.classList.add("is-leaving");
-        window.setTimeout(function () { if (row.parentNode) row.parentNode.removeChild(row); }, 280);
-      });
-      next.forEach(function (item) {
-        var current = rows.get(item.id);
-        if (!current) {
-          current = buildRow(item);
-          rows.set(item.id, current);
-          feed.appendChild(current);
-          return;
-        }
-        var name = current.querySelector("strong");
-        var msg = current.querySelector(".lgc-msg");
-        if (name) name.textContent = item.name;
-        if (msg) msg.textContent = item.text;
-      });
-      empty.hidden = next.length > 0;
     }
 
-    function tick() {
-      fetch("/data/live-chat.json", { cache: "no-store" })
-        .then(function (response) { return response.ok ? response.json() : null; })
-        .then(function (payload) { render(payload); })
-        .catch(function () { render(null); });
+    function paintMessages(animate) {
+      var rows = feed.children;
+      for (var i = 0; i < rows.length; i++) {
+        var sample = messages[(messageStart + i) % messages.length];
+        var row = rows[i];
+        var strong = row.querySelector("strong");
+        if (strong.textContent === sample.name && row.querySelector(".lgc-msg").textContent === sample.text) continue;
+        setPortrait(row.querySelector(".lgc-avatar"), personByName(sample.name));
+        strong.textContent = sample.name;
+        setFlag(row.querySelector(".lgc-flag"), sample.country);
+        row.querySelector(".lgc-msg").textContent = sample.text;
+        if (animate) soften(row.querySelector(".lgc-msg"));
+      }
     }
 
-    tick();
-    window.setInterval(tick, 12000);
+    function paintCount(animate) {
+      var next = counts[countIndex] + "+";
+      if (countEl.textContent === next) return;
+      countEl.textContent = next;
+      if (animate) soften(countEl);
+    }
+
+    function tick(animate) {
+      paintMembers(animate);
+      paintMessages(animate);
+      paintCount(animate);
+    }
+
+    tick(false);
+    window.setInterval(function () {
+      peopleStart = (peopleStart + 1) % people.length;
+      messageStart = (messageStart + 1) % messages.length;
+      countIndex = (countIndex + 1) % counts.length;
+      tick(true);
+    }, 2000);
   }
 })();
