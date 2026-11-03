@@ -11,6 +11,18 @@
     entries: "lapohub.entries"
   };
 
+  function markLively() {
+    var links = document.querySelectorAll("a");
+    for (var i = 0; i < links.length; i++) {
+      var text = links[i].textContent.replace(/\s+/g, " ").trim();
+      if (text === "Contact Us" || text === "Join WhatsApp Channel") links[i].classList.add("wa-live");
+    }
+    var labels = document.querySelectorAll(".pill-live, .card .meta");
+    for (var j = 0; j < labels.length; j++) {
+      if (labels[j].textContent.replace(/\s+/g, " ").trim() === "Active") labels[j].classList.add("is-active-pop");
+    }
+  }
+
   function read(key, fallback) {
     try {
       var raw = localStorage.getItem(key);
@@ -535,6 +547,7 @@
     navigator.serviceWorker.register("/sw.js").catch(function () {});
   }
 
+  markLively();
   initNav();
   initCopy();
   initPreviewForms();
