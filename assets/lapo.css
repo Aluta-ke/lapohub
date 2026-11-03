@@ -682,7 +682,7 @@ a.card:hover { transform: translateY(-3px); }
   gap: 2px;
   width: max-content;
   max-width: calc(100vw - 24px);
-  padding: 3px 3px 3px 4px;
+  padding: 5px 5px 5px 6px;
   background: var(--navy);
   color: #fffaf4;
   border-radius: 999px;
@@ -696,23 +696,23 @@ a.card:hover { transform: translateY(-3px); }
 .pwa-pop-install {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   border: 0;
   background: transparent;
   color: inherit;
   font: inherit;
-  font-size: 0.78rem;
+  font-size: 0.95rem;
   font-weight: 650;
   line-height: 1;
-  padding: 5px 6px 5px 7px;
+  padding: 8px 10px 8px 8px;
   cursor: pointer;
 }
-.pwa-marks { display: inline-flex; align-items: center; gap: 3px; }
+.pwa-marks { display: inline-flex; align-items: center; gap: 5px; }
 .pwa-marks svg { display: block; }
 .pwa-mark-android { color: #7dcea0; }
 .pwa-pop-x {
-  width: 22px;
-  height: 22px;
+  width: 28px;
+  height: 28px;
   border: 0;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.12);
