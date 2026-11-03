@@ -603,18 +603,18 @@
       bonus: '<svg viewBox="0 0 16 16" aria-hidden="true"><rect x="2.4" y="7" width="11.2" height="6.4" rx="1" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M8 7v6.4M2.4 9.2h11.2" stroke="currentColor" stroke-width="1.3"/><path d="M8 7C6.8 4.8 4.6 5 4.6 6.4S7 7 8 7s2.4-1.4 3.4-.6S9.2 4.8 8 7z" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>'
     };
     var activities = [
-      { country: "UG", kind: "join", text: "Example \u00b7 James from Uganda joins LapoHub." },
-      { country: "KE", kind: "register", text: "Example \u00b7 Sarah from Kenya registers an account." },
-      { country: "TZ", kind: "chat", text: "Example \u00b7 Grace from Tanzania opens a practice chat." },
-      { country: "CA", kind: "chat", text: "Example \u00b7 Emily from Canada opens a practice chat." },
-      { country: "UG", kind: "bonus", text: "Example \u00b7 David from Uganda may qualify for UGX 10,000." },
-      { country: "US", kind: "activity", text: "Example \u00b7 Daniel from the USA tries an activity." },
-      { country: "DE", kind: "join", text: "Example \u00b7 Anna from Germany joins LapoHub." },
-      { country: "GB", kind: "activity", text: "Example \u00b7 Michael from the UK tries an activity." },
-      { country: "AU", kind: "chat", text: "Example \u00b7 Sophia from Australia says hello." },
-      { country: "FR", kind: "register", text: "Example \u00b7 David from France registers an account." },
-      { country: "NL", kind: "join", text: "Example \u00b7 Sarah from the Netherlands joins LapoHub." },
-      { country: "KE", kind: "activity", text: "Example \u00b7 James from Kenya tries an activity." }
+      { country: "UG", kind: "join", text: "James from Uganda joins LapoHub." },
+      { country: "KE", kind: "register", text: "Sarah from Kenya registers an account." },
+      { country: "TZ", kind: "chat", text: "Grace from Tanzania opens a practice chat." },
+      { country: "CA", kind: "chat", text: "Emily from Canada opens a practice chat." },
+      { country: "UG", kind: "bonus", text: "David from Uganda may qualify for UGX 10,000." },
+      { country: "US", kind: "activity", text: "Daniel from the USA tries an activity." },
+      { country: "DE", kind: "join", text: "Anna from Germany joins LapoHub." },
+      { country: "GB", kind: "activity", text: "Michael from the UK tries an activity." },
+      { country: "AU", kind: "chat", text: "Sophia from Australia says hello." },
+      { country: "FR", kind: "register", text: "David from France registers an account." },
+      { country: "NL", kind: "join", text: "Sarah from the Netherlands joins LapoHub." },
+      { country: "KE", kind: "activity", text: "James from Kenya tries an activity." }
     ];
     var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
