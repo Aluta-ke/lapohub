@@ -271,7 +271,7 @@ a.btn.wa-live:hover,
 }
 .lgc-stack { display: grid; gap: 12px; min-width: 0; }
 .lgc-card {
-  background: #fff;
+  background: #d7f1fb;
   color: var(--ink);
   border-radius: 28px;
   overflow: hidden;
@@ -313,7 +313,7 @@ a.btn.wa-live:hover,
   line-height: 1;
 }
 .lgc-status span { font-size: 0.68rem; color: rgba(255, 250, 244, 0.78); }
-.lgc-body { display: grid; gap: 14px; padding: 16px 16px 18px; background: #fff; }
+.lgc-body { display: grid; gap: 14px; padding: 16px 16px 18px; background: #d7f1fb; }
 .lgc-demo {
   margin: 0;
   padding: 8px 10px;
